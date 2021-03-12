@@ -1,0 +1,49 @@
+version: '3'
+volumes:
+  chatt_data:
+  esdata:
+  redis_data:
+services:
+  elasticsearch:
+    image: elasticsearch:7.10.1
+    container_name: es01
+    environment:
+      - node.name=es01
+      - bootstrap.memory_lock=true
+      - cluster.initial_master_nodes=es01
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    depends_on: 
+      - mysqldb
+  mysqldb:
+    image: mysql:5.7
+    env_file: db.env
+    volumes:
+      - chatt_data:/var/lib/mysql
+  web:
+    build: .
+    command: bash -c "bundle && rails db:migrate && foreman start"
+    env_file: app.env
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysqldb
+      - redis
+      - elasticsearch
+  redis:
+    image: redis:alpine
+    volumes:
+      - redis_data:/data 
+
