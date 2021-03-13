@@ -61,9 +61,12 @@
 #### api/v1/messages/search?query=asd&token=asd&number=2
 * takes query, token and number of chat as query strings as shown in the example above.
 * returns any messages that contain the query specified for example if "i love pizza" was in the database as a message in the specified chat room and application and we searched for the word "love" the search will return "i love pizza" and so on.
-
-
-
+---
+## Indexes
+* token in application model
+* application_token + chat number in chat model
+* chat_id in messages model
+* application_token in chat model
 #### To Run docker-compose run the following command
 ```
 sudo sh ./runScript.sh
