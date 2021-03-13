@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  mount Rswag::Ui::Engine => "/api-docs"
-  mount Rswag::Api::Engine => "/api-docs"
   require "sidekiq/web"
   mount Sidekiq::Web => "/sidekiq"
   namespace "api" do
@@ -9,7 +7,7 @@ Rails.application.routes.draw do
       get "/chats/:token/:number/messages", to: "messages#show"
       resources :applications, param: :token
       resources :chats, only: [:index, :create]
-      resources :messages do
+      resources :messages, only: [:index, :create] do
         collection do
           get "search"
         end
