@@ -1,7 +1,7 @@
 module Api
   module V1
     class ChatsController < ApplicationController
-      before_action :set_chat, only: [:show, :update, :destroy]
+      before_action :set_chats, only: [:show]
 
       # GET /chats
       def index
@@ -28,31 +28,16 @@ module Api
         end
       end
 
-      # def update
-      #   if @chat.update(chat_params)
-      #     render json: @chat
-      #   else
-      #     render json: @chat.errors, status: :unprocessable_entity
-      #   end
-      # end
-
-      # def destroy
-      #   @chat.destroy
-      # end
-
       private
 
       # Use callbacks to share common setup or constraints between actions.
-      def set_chat
+      def set_chats
         @chats = Chat.where(application_token: params[:token])
       end
 
       # Only allow a trusted parameter "white list" through.
       def chat_params
         params.require(:chat).permit(:application_token)
-      end
-
-      def chat_number(application_key)
       end
     end
   end

@@ -46,20 +46,6 @@ module Api
         end
       end
 
-      # PATCH/PUT /messages/1
-      # def update
-      #   if @message.update(message_params)
-      #     render json: @message
-      #   else
-      #     render json: @message.errors, status: :unprocessable_entity
-      #   end
-      # end
-
-      # DELETE /messages/1
-      # def destroy
-      #   @message.destroy
-      # end
-
       private
 
       # Use callbacks to share common setup or constraints between actions.
